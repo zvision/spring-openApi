@@ -17,22 +17,17 @@ import javax.persistence.Id;
 import org.hibernate.validator.constraints.CreditCardNumber;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+
 
 @XmlRootElement(name = "customer")
 @XmlAccessorType(XmlAccessType.FIELD)
 
 @Entity
 @Data
-@Getter 
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class Customer {
 
 	@Id

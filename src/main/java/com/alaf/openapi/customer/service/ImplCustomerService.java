@@ -8,7 +8,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.alaf.openapi.customer.aspect.LoggingAspect;
 import com.alaf.openapi.customer.model.Customer;
 import com.alaf.openapi.customer.repository.CustomerRepositoryIf;
 

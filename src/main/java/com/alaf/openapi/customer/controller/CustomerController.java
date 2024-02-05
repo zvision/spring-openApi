@@ -43,7 +43,7 @@ public class CustomerController {
 					@Content(mediaType = "application/xml", schema = @Schema(implementation = Customer.class)) }),
 			@ApiResponse(responseCode = "400", description = "Bad request", content = @Content) })
 	@PostMapping(path = "/customer")
-	public ResponseEntity saveCustomer(@Valid @RequestBody Customer customer) {
+	public ResponseEntity<Customer> saveCustomer(@Valid @RequestBody Customer customer) {
 		return ResponseEntity.ok().body(customerService.saveCustomer(customer));
 	}
 
@@ -56,7 +56,7 @@ public class CustomerController {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = Customer.class)),
 					@Content(mediaType = "application/xml", schema = @Schema(implementation = Customer.class)) }),
 			@ApiResponse(responseCode = "404", description = "Customer not found", content = @Content) })
-	public ResponseEntity getCustomer(
+	public ResponseEntity<?> getCustomer(
 			@Parameter(description = "id of the customer to be searched") @PathVariable("id") long id) {
 
 		Optional<Customer> customer = customerService.getCustomerbyId(Long.valueOf(id));
@@ -70,20 +70,24 @@ public class CustomerController {
 	@RequestMapping(value = "/customer/{id}", method = RequestMethod.DELETE, produces = { "application/json" })
 	@Operation(summary = "Delete a customer by its id")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", description = "Deleted the customer", content = {
+			@ApiResponse(responseCode = "200", description = "Delete the customer", content = {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = Hashtable.class)) }),
 			@ApiResponse(responseCode = "404", description = "Customer not found", content = @Content) })
-	public Map<String, Boolean> deleteCustomer(
+	public ResponseEntity<String> deleteCustomer(
 			@Parameter(description = "id of the customer to be deleted") @PathVariable("id") long id)
 			throws ResourceNotFoundException {
 
-		Customer customer = customerService.getCustomerbyId(Long.valueOf(id))
-				.orElseThrow(() -> new ResourceNotFoundException("Customer not found: " + id));
+		Optional<Customer> customer = customerService.getCustomerbyId(Long.valueOf(id));
+		String jsonMsg = "";
 
-		customerService.deleteCustomerbyId(customer.getId());
-		Map<String, Boolean> response = new HashMap<>();
-		response.put("deleted", Boolean.TRUE);
-		return response;
+		if (customer.isPresent()) {
+			customerService.deleteCustomerbyId(customer.get().getId());
+			jsonMsg = "{\"status\":\"Customer deleted!\"}";
+			return ResponseEntity.ok().body(jsonMsg);
+		}
+
+		jsonMsg = "{\"status\":\"Customer not found!\"}";
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(jsonMsg);
 	}
 
 }
