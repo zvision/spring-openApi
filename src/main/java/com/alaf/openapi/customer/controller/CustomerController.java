@@ -1,8 +1,6 @@
 package com.alaf.openapi.customer.controller;
 
-import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.Map;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -20,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alaf.openapi.customer.exception.ResourceNotFoundException;
 import com.alaf.openapi.customer.model.Customer;
-import com.alaf.openapi.customer.service.ImplCustomerService;
+import com.alaf.openapi.customer.service.IfCustomerService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -33,7 +31,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 public class CustomerController {
 
 	@Autowired
-	private ImplCustomerService customerService;
+	private IfCustomerService customerService;
 
 	
 	@Operation(summary = "Create a new customer")

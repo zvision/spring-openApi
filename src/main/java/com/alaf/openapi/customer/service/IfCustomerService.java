@@ -14,6 +14,8 @@ public interface IfCustomerService {
     List<Customer> fetchCustomerList();
  
     Optional<Customer> getCustomerbyId(Long customertId);
+    
+    void deleteCustomerbyId(Long customertId);
  
    
 }
