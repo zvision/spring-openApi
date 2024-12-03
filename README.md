@@ -16,6 +16,11 @@ Hur/vad göra
  sätt parametrarna Host: localhost, Port: 5000
 
 
+swagger-ui.html </br>
+--------------------- </br>
+
+see: http://localhost:8080/index.html </br>
+
 In-memory databasen </br>
 ----------------------------
 Driver Class: org.h2.Driver </br>
